@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { time } = "./controllers/blog";
 
-router.get("/", (req, res) => {
-  res.json({ time: Date().toString() });
-});
+//Here any request to the route will be handled by time controller method
+router.get("/", time);
 
 module.exports = router;
