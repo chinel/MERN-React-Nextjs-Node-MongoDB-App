@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { time } = "./controllers/blog";
+const { time } = require("../controllers/blog");
 
 //Here any request to the route will be handled by time controller method
 router.get("/", time);
