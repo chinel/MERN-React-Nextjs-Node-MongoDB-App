@@ -52,3 +52,5 @@ const userSchema = new mongoose.Schema(
   },
   { timestamp: true } // the timestamp automatically adds created and updated date time stamps to the database
 );
+
+module.exports = mongoose.model("User", userSchema);
