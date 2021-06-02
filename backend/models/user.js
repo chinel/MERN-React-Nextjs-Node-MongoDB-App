@@ -79,6 +79,9 @@ userSchema.methods = {
       return "";
     }
   },
+  makeSalt: function () {
+    return Math.round(new Date().valueOf() * Math.random()) + "";
+  },
 };
 
 module.exports = mongoose.model("User", userSchema);
