@@ -7,5 +7,18 @@ exports.signup = (req, res) => {
         error: "Email is taken",
       });
     }
+    const { name, email, password } = req.body;
+    let username = shortId.generate();
+    let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+    let newUser = new User({ name, email, password, profile, username });
+    newUser.save((err, success) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json({
+        message: "Signup success! Please signin.",
+      });
+    });
   });
 };
