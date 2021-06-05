@@ -16,10 +16,10 @@ exports.signup = (req, res) => {
       if (err) {
         return res.status(400).json({ error: err });
       }
-      res.json({ user: success });
-      // res.json({
-      //   message: "Signup success! Please signin.",
-      // });
+      // res.json({ user: success });
+      res.json({
+        message: "Signup success! Please signin.",
+      });
     });
   });
 };
