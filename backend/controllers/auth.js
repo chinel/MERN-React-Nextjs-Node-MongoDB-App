@@ -23,3 +23,18 @@ exports.signup = (req, res) => {
     });
   });
 };
+
+exports.signin = (req, res) => {
+  const { email, password } = req.body;
+  //Check if user exist
+  //Below instead of specifying email:email we use object shorthand syntax
+  User.findOne({ email }).exec((err, user) => {
+    if (err || !user) {
+      return res
+        .status(400)
+        .json({ error: "User with that email does not exist. Please signup." });
+    }
+  });
+  //authenticate
+  //generate a json web token
+};
