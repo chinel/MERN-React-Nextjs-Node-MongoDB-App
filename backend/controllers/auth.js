@@ -46,6 +46,13 @@ exports.signin = (req, res) => {
       expiresIn: "1d",
     });
 
-    
+    res.cookie("token", token, { expiresIn: "1d" });
+
+    const { _id, username, name, email, role } = user;
+
+    return res.json({
+      token,
+      user,
+    });
   });
 };
