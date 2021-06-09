@@ -1,5 +1,8 @@
 const User = require("../models/user");
 const shortId = require("shortId");
+const jwt = require("jsonwebtoken");
+const expressjwt = require("express-jwt");
+
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
     if (user) {
@@ -38,6 +41,11 @@ exports.signin = (req, res) => {
     if (!user.authenticate(password)) {
       return res.status(400).json({ error: "Email and password do not match" });
     }
-    //generate a json web token
+    //generate a json web token using user id, JWT Secret and expiry date
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    
   });
 };
