@@ -34,7 +34,10 @@ exports.signin = (req, res) => {
         .status(400)
         .json({ error: "User with that email does not exist. Please signup." });
     }
+    //authenticate
+    if (!user.authenticate(password)) {
+      return res.status(400).json({ error: "Email and password do not match" });
+    }
+    //generate a json web token
   });
-  //authenticate
-  //generate a json web token
 };
