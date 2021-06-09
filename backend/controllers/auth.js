@@ -52,7 +52,7 @@ exports.signin = (req, res) => {
 
     return res.json({
       token,
-      user,
+      user: { _id, username, name, email, role }, //here we prevented the hashed_password and salt from showing so we used object destructuring to pull out only field required
     });
   });
 };
