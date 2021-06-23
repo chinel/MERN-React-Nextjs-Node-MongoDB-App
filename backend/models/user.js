@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique: email,
+      unique: true,
       lowercase: true,
     },
     profile: {
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     role: {
-      type: number,
+      type: Number,
       trim: true,
     },
     photo: {
