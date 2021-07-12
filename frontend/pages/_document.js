@@ -10,7 +10,17 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head></Head>
+        <Head>
+          <meta charset="UTF-8" />
+          <meta
+            view="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdn.usebootstrap.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />
