@@ -14,11 +14,11 @@ import {
   NavbarText,
 } from "reactstrap";
 
-const Example = (props) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => setIsOpen(!isOpen);
-
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -52,5 +52,3 @@ const Example = (props) => {
     </div>
   );
 };
-
-export default Example;
