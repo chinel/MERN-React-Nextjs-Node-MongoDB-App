@@ -1,10 +1,24 @@
+import { useState } from "react";
 const SignupComponent = () => {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    error: "",
+    loading: false,
+    message: "",
+    showForm: true,
+  });
+
+  const { name, email, password, error, loading, message, showForm } = values;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handle submit");
+    console.table({ name, email, password, error, loading, message, showForm });
   };
 
   const handleChange = (e) => {
+    setValues({ ...values, error: false, [e.target.name]: e.target.value });
     console.log(e.target.value);
   };
 
@@ -13,7 +27,9 @@ const SignupComponent = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
+            name="name"
             onChange={handleChange}
+            value={name}
             type="text"
             className="form-control"
             placeholder="Type your name"
@@ -21,6 +37,8 @@ const SignupComponent = () => {
         </div>
         <div className="form-group">
           <input
+            name="email"
+            value={email}
             onChange={handleChange}
             type="email"
             className="form-control"
@@ -29,6 +47,8 @@ const SignupComponent = () => {
         </div>
         <div className="form-group">
           <input
+            name="password"
+            value={password}
             onChange={handleChange}
             type="password"
             className="form-control"
