@@ -19,6 +19,25 @@ const SignupComponent = () => {
             placeholder="Type your name"
           />
         </div>
+        <div className="form-group">
+          <input
+            onChange={handleChange}
+            type="email"
+            className="form-control"
+            placeholder="Type your email"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            onChange={handleChange}
+            type="password"
+            className="form-control"
+            placeholder="Type your password"
+          />
+        </div>
+        <div>
+          <button className="btn btn-primary">Signup</button>
+        </div>
       </form>
     );
   };
