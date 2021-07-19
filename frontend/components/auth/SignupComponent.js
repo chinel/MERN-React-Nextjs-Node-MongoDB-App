@@ -19,7 +19,7 @@ const SignupComponent = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, error: false, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const signupForm = () => {
