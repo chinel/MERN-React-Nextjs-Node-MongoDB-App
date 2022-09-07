@@ -20,7 +20,8 @@ const SignupComponent = () => {
     const user = { name, email, password };
 
     signup(user).then((data) => {
-      // error: "error text"}
+      // error: "error text"
+      console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -40,7 +41,6 @@ const SignupComponent = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, error: false, [e.target.name]: e.target.value });
-    // console.log(e.target.value);
   };
 
   const signupForm = () => {
