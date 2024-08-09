@@ -10,11 +10,11 @@ const blogRoutes = require("./routes/blog");
 const authRoutes = require("./routes/auth");
 
 //app
-const app = express();
+const app = express(); //invoke the express app
 
 //db
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {
+  .connect(process.env.DATABASE_CLOUD, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -22,6 +22,9 @@ mongoose
   })
   .then(() => {
     console.log("db connection established");
+  })
+  .catch((e) => {
+    console.log("error:", e);
   });
 
 //middlewares
