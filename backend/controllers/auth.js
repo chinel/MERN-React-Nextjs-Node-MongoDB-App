@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const shortId = require("shortId");
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
+const { expressjwt } = require("express-jwt");
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((err, user) => {
@@ -66,7 +66,7 @@ exports.signout = (req, res) => {
 };
 
 // this middleware gets the incoming JWT secret from the request and also checks if it has expired
-exports.requireSignin = expressJwt({
+exports.requireSignin = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
 });
