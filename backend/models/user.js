@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
+const crypto = require("crypto"); // this will be used to hash password
 
 const userSchema = new mongoose.Schema(
   {
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    salt: String,
+    salt: String, // for hashing password
     about: {
       type: String,
     },
