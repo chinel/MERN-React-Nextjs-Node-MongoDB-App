@@ -14,7 +14,7 @@ const {
   userSigninValidator,
 } = require("../validators/auth");
 
-//Here any request to the route will be handled by signup controller method
+//Auth routes
 router.post("/signup", userSignupValidator, runValidation, signup);
 router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/signout", signout);
