@@ -24,7 +24,7 @@ mongoose
     console.log("db connection established");
   })
   .catch((e) => {
-    console.log("error:", e);
+    console.log("error:-->", e);
   });
 
 //middlewares
