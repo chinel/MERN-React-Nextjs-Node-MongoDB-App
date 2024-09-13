@@ -67,7 +67,7 @@ exports.signout = (req, res) => {
   });
 };
 
-// this middleware gets the incoming JWT secret from the request and also checks if it has expired
+// this middleware gets the incoming JWT Token secret from the request and also checks if it has expired
 exports.requireSignin = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
