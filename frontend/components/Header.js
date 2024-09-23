@@ -32,12 +32,12 @@ const Header = () => {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <Link href="/signin" legacyBehavior>
-                <NavLink>Signin</NavLink>
+                <NavLink href="/signin">Signin</NavLink>
               </Link>
             </NavItem>
             <NavItem>
               <Link href="/signup" legacyBehavior>
-                <NavLink>Signup</NavLink>
+                <NavLink href="/signup">Signup</NavLink>
               </Link>
             </NavItem>
           </Nav>
