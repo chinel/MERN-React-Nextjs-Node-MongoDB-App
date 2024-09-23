@@ -25,19 +25,19 @@ const Header = () => {
     <div>
       <Navbar color="light" light expand="md">
         <Link href="/" legacyBehavior>
-          <NavLink className="font-weight-bold">{APP_NAME}</NavLink>
+          <NavbarBrand className="font-weight-bold">{APP_NAME}</NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
+        <Collapse isOpen={isOpen} navbar className="justify-content-end">
           <Nav className="ml-auto" navbar>
             <NavItem>
               <Link href="/signin" legacyBehavior>
-                <NavLink>Signin</NavLink>
+                <NavLink href="/signin">Signin</NavLink>
               </Link>
             </NavItem>
             <NavItem>
               <Link href="/signup" legacyBehavior>
-                <NavLink>Signup</NavLink>
+                <NavLink href="/signup">Signup</NavLink>
               </Link>
             </NavItem>
           </Nav>
