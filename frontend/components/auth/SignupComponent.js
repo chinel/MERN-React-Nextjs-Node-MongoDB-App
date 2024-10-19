@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { signup } from "../../actions/auth";
 const SignupComponent = () => {
   const [values, setValues] = useState({
@@ -43,42 +43,56 @@ const SignupComponent = () => {
     setValues({ ...values, error: false, [e.target.name]: e.target.value });
   };
 
+  const showAlert = () => {
+    if (loading) return <div className="alert alert-info">Loading...</div>;
+    if (error) return <div className="alert alert-danger">{error}</div>;
+    if (message) return <div className="alert alert-info">{message}</div>;
+    return null;
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          name="name"
-          onChange={handleChange}
-          value={name}
-          type="text"
-          className="form-control"
-          placeholder="Type your name"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          name="email"
-          value={email}
-          onChange={handleChange}
-          type="email"
-          className="form-control"
-          placeholder="Type your email"
-        />
-      </div>
-      <div className="form-group">
-        <input
-          name="password"
-          value={password}
-          onChange={handleChange}
-          type="password"
-          className="form-control"
-          placeholder="Type your password"
-        />
-      </div>
-      <div>
-        <button className="btn btn-primary">Signup</button>
-      </div>
-    </form>
+    <React.Fragment>
+      {showAlert()}
+      {showForm && (
+        <form onSubmit={handleSubmit}>
+          <div className="d-flex flex-column gap-4">
+            <div className="form-group">
+              <input
+                name="name"
+                onChange={handleChange}
+                value={name}
+                type="text"
+                className="form-control py-2 fs-5"
+                placeholder="Full name"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                name="email"
+                value={email}
+                onChange={handleChange}
+                type="email"
+                className="form-control py-2 fs-5"
+                placeholder="Email address"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                name="password"
+                value={password}
+                onChange={handleChange}
+                type="password"
+                className="form-control py-2 fs-5"
+                placeholder="Password"
+              />
+            </div>
+            <div className="d-flex justify-content-end">
+              <button className="btn btn-primary py-2 px-4 fs-5">Signup</button>
+            </div>
+          </div>
+        </form>
+      )}
+    </React.Fragment>
   );
 };
 
