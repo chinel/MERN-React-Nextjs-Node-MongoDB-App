@@ -102,3 +102,21 @@ export const authenticate = (data, next) => {
   setLocalStorage("user", user);
   next();
 };
+
+/**
+ *
+ * @param {*} next //callback function
+ */
+export const signOut = (next) => {
+  removeCookie("token");
+  removeLocalStorage("user");
+  next();
+
+  return fetch(`${API}/signout`, {
+    method: "GET",
+  })
+    .then((response) => {
+      console.log("signout success");
+    })
+    .catch((err) => console.log(err));
+};
