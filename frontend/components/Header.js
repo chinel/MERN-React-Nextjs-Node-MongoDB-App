@@ -20,20 +20,18 @@ import { signOut, isAuth } from "../actions/auth";
 import { useRouter } from "next/navigation";
 
 const ButtonStyles = {
-  backgroundColor: "transparent", // Transparent background
-  border: "none", // No border
-  color: "inherit", // Inherit color or specify a color
-  padding: "8px 16px", // Optional padding
+  padding: "8px 16px",
   cursor: "pointer",
+  color: "#000000a6",
 };
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  const isAuthenticated = isAuth();
+  // const isAuthenticated =  //isAuth();
 
   const handleSignout = async () => {
     await signOut(() => router.push("/signin"));
@@ -48,10 +46,8 @@ const Header = () => {
         <Collapse isOpen={isOpen} navbar className="justify-content-end">
           <Nav className="ml-auto" navbar>
             {isAuthenticated ? (
-              <NavItem>
-                <Button style={ButtonStyles} onClick={() => handleSignout()}>
-                  Signout
-                </Button>
+              <NavItem style={ButtonStyles} onClick={() => handleSignout()}>
+                Signout
               </NavItem>
             ) : (
               <>
