@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Link from "next/link";
 import SignupComponent from "../components/auth/SignupComponent";
+import { isAuth } from "../actions/auth";
 
 const Signup = () => {
   return (
@@ -13,6 +14,22 @@ const Signup = () => {
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps = (context) => {
+  const auth = isAuth(context);
+  if (auth) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token: auth }, // Pass auth data to the page as props
+  };
 };
 
 export default Signup;

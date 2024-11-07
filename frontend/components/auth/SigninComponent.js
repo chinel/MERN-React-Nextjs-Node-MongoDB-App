@@ -13,12 +13,14 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
-  useEffect(() => {
-    const user = isAuth();
-    if (user) {
-      Router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isAuthenticated = isAuth();
+  //   console.log("isAuthenticated-->", isAuthenticated);
+  //   if (isAuthenticated) {
+  //     Router.push("/");
+  //   }
+  // }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.table({ email, password, error, loading, message, showForm });
