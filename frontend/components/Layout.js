@@ -1,9 +1,9 @@
 import Header from "./Header";
 
-const Layout = ({ children }) => {
+const Layout = ({ isAuthenticated, children }) => {
   return (
     <>
-      <Header />
+      <Header isAuthenticated={isAuthenticated} />
       {children}
       {/* <p>Footer</p> */}
     </>

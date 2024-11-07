@@ -1,6 +1,7 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
-import cookie from "js-cookie";
+// import cookie from "js-cookie";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 //process.browser is deprecated for check if is client. An alternative below
 const isBrowser =
@@ -35,26 +36,31 @@ export const signin = (user) => {
 };
 
 //set Cookie
-export const setCookie = (key, value) => {
-  if (isBrowser) {
-    cookie.set(key, value, {
-      expires: 1, // 1 day
-    });
-  }
+export const saveCookie = (key, value) => {
+  setCookie(null, key, value, { path: "/" });
+
+  // if (isBrowser) {
+  //   cookie.set(key, value, {
+  //     expires: 1, // 1 day
+  //   });
+  // }
 };
 
 //remove Cookie
 export const removeCookie = (key) => {
-  if (isBrowser) {
-    cookie.remove(key);
-  }
+  destroyCookie(null, key, { path: "/" });
+  // if (isBrowser) {
+  //   cookie.remove(key);
+  // }
 };
 
 //get Cookie
 export const getCookie = (key) => {
-  if (isBrowser) {
-    return cookie.get(key);
-  }
+  destroyCookie(null, key, { path: "/" });
+
+  // if (isBrowser) {
+  //   return cookie.get(key);
+  // }
 };
 
 //local Storage
@@ -76,18 +82,24 @@ export const getLocalStorage = (key) => {
   }
 };
 
-export const isAuth = () => {
-  if (isBrowser) {
-    const cookieChecked = getCookie("token");
-    if (cookieChecked) {
-      const user = getLocalStorage("user");
-      if (user) {
-        return JSON.parse(user);
-      } else {
-        return false;
-      }
-    }
-  }
+export const isAuth = (ctx = null) => {
+  // if (isBrowser) {
+  //   const cookieChecked = getCookie("token");
+  //   if (cookieChecked) {
+  //     const user = getLocalStorage("user");
+  //     if (user) {
+  //       return JSON.parse(user);
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  // }
+  // return false;
+
+  const cookies = parseCookies(ctx); // Gets cookies on client (if ctx is null) or server
+  const token = cookies.token;
+
+  return token || false;
 };
 
 //authenticate user by passing data to cookie & localstorage
@@ -98,8 +110,8 @@ export const isAuth = () => {
  */
 export const authenticate = (data, next) => {
   const { token, user } = data;
-  setCookie("token", token);
-  setLocalStorage("user", user);
+  saveCookie("token", token);
+  // setLocalStorage("user", user);
   next();
 };
 
@@ -109,7 +121,7 @@ export const authenticate = (data, next) => {
  */
 export const signOut = (next) => {
   removeCookie("token");
-  removeLocalStorage("user");
+  // removeLocalStorage("user");
   next();
 
   return fetch(`${API}/signout`, {
