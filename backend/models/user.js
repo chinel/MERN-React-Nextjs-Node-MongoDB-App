@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      trim: true,
+      default: 0,
     },
     photo: {
       data: Buffer, //mongodb is good for saving binary data
