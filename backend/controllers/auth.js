@@ -72,3 +72,42 @@ exports.requireSignin = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
 });
+
+exports.authMiddleware = (req, res, next) => {
+  const authUserId = req.auth._id;
+
+  User.findById({ _id: authUserId })
+    .select("-hashed_password -salt -__v") // Exclude 'password', 'salt' and '__v'
+    .exec((err, user) => {
+      if (err || !user) {
+        return res.status(400).json({
+          error: "User not found",
+        });
+      }
+
+      req.profile = user; // this will expose the user  req.profile
+      next();
+    });
+};
+
+exports.adminMiddleware = (req, res, next) => {
+  const adminUserId = req.auth._id;
+
+  User.findById({ _id: adminUserId })
+    .select("-hashed_password -salt -__v") // Exclude 'password', 'salt' and '__v'
+    .exec((err, user) => {
+      if (err || !user) {
+        return res.status(400).json({
+          error: "User not found",
+        });
+      }
+
+      if (user.role !== 1) {
+        return res.status(400).json({
+          error: "Admin resource. Access denied not found",
+        });
+      }
+      req.profile = user; // this will expose the user  req.profile
+      next();
+    });
+};
