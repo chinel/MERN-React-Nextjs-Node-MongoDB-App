@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Layout from "../components/Layout";
 import SigninComponent from "../components/auth/SigninComponent";
-import { isAuth } from "../actions/auth";
+import { getUserProfile, isAuth } from "../actions/auth";
 
 const Signin = () => {
   return (
@@ -16,12 +16,15 @@ const Signin = () => {
   );
 };
 
-export const getServerSideProps = (context) => {
+export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
   if (auth) {
+    const user = await getUserProfile();
+    const path = user.role === 0 ? "/user" : "/admin";
+
     return {
       redirect: {
-        destination: "/",
+        destination: path,
         permanent: false,
       },
     };

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { authenticate, isAuth, signin } from "../../actions/auth";
+import {
+  authenticate,
+  getUserProfile,
+  isAuth,
+  signin,
+} from "../../actions/auth";
 import Router from "next/router";
 const SigninComponent = () => {
   const [values, setValues] = useState({
@@ -13,13 +18,21 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
-  // useEffect(() => {
-  //   const isAuthenticated = isAuth();
-  //   console.log("isAuthenticated-->", isAuthenticated);
-  //   if (isAuthenticated) {
-  //     Router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const getUser = async () => {
+      const profile = await getUserProfile();
+      if (profile.role === 0) {
+        Router.push("/user");
+      } else {
+        Router.push("/admin");
+      }
+    };
+    const isAuthenticated = isAuth();
+
+    if (isAuthenticated) {
+      getUser();
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,20 +40,32 @@ const SigninComponent = () => {
     setValues({ ...values, loading: true, error: "" });
     const user = { email, password };
 
-    signin(user).then((data) => {
-      // error: "error text"
-      console.log(data);
-      if (data.error) {
-        setValues({ ...values, error: data.error, loading: false });
-      } else {
-        //save user token to cookie
-        //save user info to localstorage
-        //authenticate user
-        authenticate(data, () => {
-          Router.push("/");
+    signin(user)
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          //authenticate user
+          authenticate(data, async () => {
+            const profile = await getUserProfile();
+            console.log("profile--->", profile);
+            if (profile.role === 0) {
+              Router.push("/user");
+            } else {
+              Router.push("/admin");
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setValues({
+          ...values,
+          error: "Opps! an error occurred",
+          loading: false,
         });
-      }
-    });
+      });
   };
 
   const handleChange = (e) => {
