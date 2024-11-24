@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  authenticate,
-  getUserProfile,
-  isAuth,
-  signin,
-} from "../../actions/auth";
+import { authenticate, getUserProfile, signin } from "../../actions/auth";
 import Router from "next/router";
+import useAuthRedirect from "../../hooks/useAuthRedirect";
 const SigninComponent = () => {
   const [values, setValues] = useState({
     email: "",
@@ -18,21 +14,8 @@ const SigninComponent = () => {
 
   const { email, password, error, loading, message, showForm } = values;
 
-  useEffect(() => {
-    const getUser = async () => {
-      const profile = await getUserProfile();
-      if (profile.role === 0) {
-        Router.push("/user");
-      } else {
-        Router.push("/admin");
-      }
-    };
-    const isAuthenticated = isAuth();
-
-    if (isAuthenticated) {
-      getUser();
-    }
-  }, []);
+  //redirect the user if already logged in
+  useAuthRedirect();
 
   const handleSubmit = (e) => {
     e.preventDefault();
