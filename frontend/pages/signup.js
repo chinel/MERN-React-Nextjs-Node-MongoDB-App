@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
   if (auth) {
     const user = await getUserProfile();
-    const path = user.role === 0 ? "/user" : "/admin";
+    const path = user && user.role === 0 ? "/user" : "/admin";
     return {
       redirect: {
         destination: path,
