@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import Link from "next/link";
 import SignupComponent from "../components/auth/SignupComponent";
-import { isAuth } from "../actions/auth";
+import { getUserProfile, isAuth } from "../actions/auth";
 
 const Signup = () => {
   return (
@@ -16,12 +16,14 @@ const Signup = () => {
   );
 };
 
-export const getServerSideProps = (context) => {
+export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
   if (auth) {
+    const user = await getUserProfile();
+    const path = user.role === 0 ? "/user" : "/admin";
     return {
       redirect: {
-        destination: "/",
+        destination: path,
         permanent: false,
       },
     };

@@ -55,13 +55,13 @@ export const removeCookie = (key) => {
 };
 
 //get Cookie
-export const getCookie = (key) => {
-  destroyCookie(null, key, { path: "/" });
+// export const getCookie = (key) => {
+//   destroyCookie(null, key, { path: "/" });
 
-  // if (isBrowser) {
-  //   return cookie.get(key);
-  // }
-};
+// if (isBrowser) {
+//   return cookie.get(key);
+// }
+// };
 
 //local Storage
 export const setLocalStorage = (key, value) => {
@@ -100,6 +100,23 @@ export const isAuth = (ctx = null) => {
   const token = cookies.token;
 
   return token || false;
+};
+
+export const getUserProfile = async (ctx) => {
+  const cookies = parseCookies(ctx); // Gets cookies on client (if ctx is null) or server
+  const token = cookies.token;
+
+  const response = await fetch(`${API}/profile`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (response.status !== 200) {
+    throw new Error({ error: "User not found" });
+  }
+
+  const user = await response.json();
+
+  return user.profile;
 };
 
 //authenticate user by passing data to cookie & localstorage

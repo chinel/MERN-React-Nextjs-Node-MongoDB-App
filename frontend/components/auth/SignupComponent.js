@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { isAuth, signup } from "../../actions/auth";
-import Router from "next/router";
+import { signup } from "../../actions/auth";
+
+import useAuthRedirect from "../../hooks/useAuthRedirect";
 
 const SignupComponent = () => {
   const [values, setValues] = useState({
@@ -15,12 +16,9 @@ const SignupComponent = () => {
 
   const { name, email, password, error, loading, message, showForm } = values;
 
-  useEffect(() => {
-    const user = isAuth();
-    if (user) {
-      Router.push("/");
-    }
-  }, []);
+  //redirect the user if already logged in
+  useAuthRedirect();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.table({ name, email, password, error, loading, message, showForm });
