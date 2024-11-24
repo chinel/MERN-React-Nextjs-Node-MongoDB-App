@@ -13,7 +13,9 @@ export default UserDashboard;
 
 export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
-  if (!auth) {
+  const user = await getUserProfile(context);
+
+  if (!auth || !user) {
     return {
       redirect: {
         destination: "/signin",
@@ -22,7 +24,6 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const user = await getUserProfile();
   if (user.role !== 0) {
     return {
       redirect: {

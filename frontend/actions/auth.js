@@ -111,7 +111,7 @@ export const getUserProfile = async (ctx) => {
   });
 
   if (response.status !== 200) {
-    throw new Error({ error: "User not found" });
+    return null;
   }
 
   const user = await response.json();
