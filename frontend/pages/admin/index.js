@@ -1,10 +1,13 @@
 import { getUserProfile, isAuth } from "../../actions/auth";
 import Layout from "../../components/Layout";
+import Admin from "../../components/protectRoutes/admin";
 
 const AdminDashboard = (props) => {
   return (
     <Layout isAuthenticated={props.token}>
-      <h2>AdminDashboard</h2>
+      <Admin>
+        <h2>AdminDashboard</h2>
+      </Admin>
     </Layout>
   );
 };

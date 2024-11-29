@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Layout from "../components/Layout";
 import SigninComponent from "../components/auth/SigninComponent";
-import { getUserProfile, isAuth } from "../actions/auth";
+import { getUserProfile, isAuth, signOut } from "../actions/auth";
 
 const Signin = () => {
   return (
@@ -19,15 +19,31 @@ const Signin = () => {
 export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
   if (auth) {
-    const user = await getUserProfile();
-    const path = user && user.role === 0 ? "/user" : "/admin";
+    try {
+      const user = await getUserProfile();
+      let path = "";
+      if (user && user.role === 0) {
+        path = "/user";
+      } else if (user && user.role === 1) {
+        path = "/admin";
+      }
 
-    return {
-      redirect: {
-        destination: path,
-        permanent: false,
-      },
-    };
+      return {
+        redirect: {
+          destination: path,
+          permanent: false,
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      signOut();
+
+      return {
+        props: {
+          error: error.message,
+        },
+      };
+    }
   }
 
   return {

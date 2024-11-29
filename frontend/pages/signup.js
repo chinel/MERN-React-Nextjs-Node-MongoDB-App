@@ -19,14 +19,31 @@ const Signup = () => {
 export const getServerSideProps = async (context) => {
   const auth = isAuth(context);
   if (auth) {
-    const user = await getUserProfile();
-    const path = user && user.role === 0 ? "/user" : "/admin";
-    return {
-      redirect: {
-        destination: path,
-        permanent: false,
-      },
-    };
+    try {
+      const user = await getUserProfile();
+      let path = "";
+      if (user && user.role === 0) {
+        path = "/user";
+      } else if (user && user.role === 1) {
+        path = "/admin";
+      }
+
+      return {
+        redirect: {
+          destination: path,
+          permanent: false,
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      signOut();
+
+      return {
+        props: {
+          error: error.message,
+        },
+      };
+    }
   }
 
   return {
