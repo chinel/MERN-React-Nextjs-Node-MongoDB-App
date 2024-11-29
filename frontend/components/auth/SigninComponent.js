@@ -35,7 +35,7 @@ const SigninComponent = () => {
             console.log("profile--->", profile);
             if (profile.role === 0) {
               Router.push("/user");
-            } else {
+            } else if (profile.role === 1) {
               Router.push("/admin");
             }
           });

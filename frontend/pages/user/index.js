@@ -1,10 +1,13 @@
 import { getUserProfile, isAuth } from "../../actions/auth";
 import Layout from "../../components/Layout";
+import Private from "../../components/protectRoutes/private";
 
 const UserDashboard = (props) => {
   return (
     <Layout isAuthenticated={props.token}>
-      <h2>UserDashboard</h2>
+      <Private>
+        <h2>UserDashboard</h2>
+      </Private>
     </Layout>
   );
 };

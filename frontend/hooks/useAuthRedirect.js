@@ -1,15 +1,21 @@
 import { useEffect } from "react";
 import Router from "next/router";
-import { getUserProfile, isAuth } from "../actions/auth";
+import { getUserProfile, isAuth, signOut } from "../actions/auth";
 
 const useAuthRedirect = () => {
   useEffect(() => {
     const getUser = async () => {
-      const profile = await getUserProfile();
-      if (profile.role === 0) {
-        Router.push("/user");
-      } else {
-        Router.push("/admin");
+      try {
+        const profile = await getUserProfile();
+
+        if (profile.role === 0) {
+          Router.push("/user");
+        } else if (profile.role === 1) {
+          Router.push("/admin");
+        }
+      } catch (error) {
+        signOut(() => Router.push("/signin"));
+        console.log(error);
       }
     };
     const isAuthenticated = isAuth();
